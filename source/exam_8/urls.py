@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from webapp.views import ProductListView, ProductView, ProductCreate, Product_Update_View, Delete_Product, \
-    ReviewCreateView, ReviewUpdateView
+    ReviewCreateView, ReviewUpdateView, ReviewDeleteView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,7 +37,7 @@ urlpatterns = [
         path('review/', include([
             path('<int:pk>/', include([
                 path('update/', ReviewUpdateView.as_view(), name='review_update'),
-                # path('delete/', CommentDeleteView.as_view(), name='comment_delete'),
+                path('delete/', ReviewDeleteView.as_view(), name='review_delete'),
             ]))
         ]))
     ]))
