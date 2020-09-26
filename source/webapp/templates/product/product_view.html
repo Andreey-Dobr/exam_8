@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Project List{% endblock %}
+
+{% block menu %}
+    {% if perms.webapp.change_project or project.user == request.user %}
+    <li><a  href="#">Delete project</a></li>
+    <li><a  href="#">add task</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1>Название:{{ product.name }}</h1>
+    <p>Категория: {{ product.category }}</p>
+    <p>Описание: {{ product.description }}</p>
+    <p>фото: {{ product.image }}</p>
+
+
+    <h3>Tasks:</h3>
+
+
+
+
+{% endblock %}
