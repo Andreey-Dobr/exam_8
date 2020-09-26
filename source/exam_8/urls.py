@@ -14,16 +14,36 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
-from webapp.views import ProductListView, ProductView, ProductCreate, Product_Update_View, Delete_Product
+from webapp.views import ProductListView, ProductView, ProductCreate, Product_Update_View, Delete_Product, \
+    ReviewCreateView, ReviewUpdateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', ProductListView.as_view(), name='title'),
-    path('product/<int:pk>/', ProductView.as_view(), name='product_view'),
+
+    path('product/', include([
+        path('<int:pk>/', include([
+            path('', ProductView.as_view(), name='product_view'),
+            path('update/', Product_Update_View.as_view(), name='update_product'),
+            path('del/', Delete_Product.as_view(), name='del'),
+            path('reviews/add/', ReviewCreateView.as_view(), name='review_add'),
+            ])),
+
+
     path('product/add/', ProductCreate.as_view(), name='product_create'),
-    path('product/<int:pk>/update/', Product_Update_View.as_view(), name='update_product'),
-    path('product/<int:pk>/del/', Delete_Product.as_view(), name='del'),
+
+        path('review/', include([
+            path('<int:pk>/', include([
+                path('update/', ReviewUpdateView.as_view(), name='review_update'),
+                # path('delete/', CommentDeleteView.as_view(), name='comment_delete'),
+            ]))
+        ]))
+    ]))
+
+
+
+
 
 ]

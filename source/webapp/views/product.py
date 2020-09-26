@@ -4,8 +4,7 @@ from django.views.generic import DetailView, ListView, CreateView, UpdateView, D
 
 from webapp.forms import ProductForm
 from webapp.models import Product
-
-
+from webapp.views import product
 
 
 class ProductListView(ListView):

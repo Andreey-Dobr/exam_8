@@ -5,7 +5,7 @@
 {% block menu %}
     {% if perms.webapp.change_project or project.user == request.user %}
     <li><a  href="#">Delete project</a></li>
-    <li><a  href="#">add task</a></li>
+    <li><a  href="{% url 'review_add' product.pk  %}">add review</a></li>
     {% endif %}
 {% endblock %}
 
@@ -14,11 +14,28 @@
     <p>Категория: {{ product.category }}</p>
     <p>Описание: {{ product.description }}</p>
     <p>фото: {{ product.image }}</p>
-
-
-    <h3>Tasks:</h3>
+    {{ product.reviews }}
 
 
 
+    <h3>Review</h3>
+    {% for review in product.reviews.all %}
+        <div class="box">
+            <h4><a href="#">{{ review.author }}</a></h4>
+            <div class="pre">{{ review.text }}</div>
+        <table width="50%" border="0" cellpadding="5" cellspacing="0">
+         <col width="33%" valign="top">
+            <tr>
+                <td> <a style="text-decoration: none;text-transform: uppercase;color:
+            #6a7dff" href="{% url 'review_update' review.pk  %}">Update </a></td>
+                <td><a style="text-decoration: none;text-transform: uppercase;color:
+            #6a7dff" href="#">Delete</a></td>
+            </tr>
+        </table>
+        </div>
+            {% empty %}
+            <p>Нет комментариев</p>
+        {% endfor %}
 
 {% endblock %}
+
